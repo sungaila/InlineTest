@@ -33,12 +33,12 @@ jobs:
     displayName: 'Restore solution'
     inputs:
       command: 'restore'
-      projects: 'src\InlineTest.sln'
+      projects: 'InlineTest.sln'
       feedsToUse: 'select'
   - task: VSBuild@1
     displayName: 'Build solution'
     inputs:
-      solution: 'src\InlineTest.sln'
+      solution: 'InlineTest.sln'
       msbuildArgs: '/p:VersionSuffix=ci'
       configuration: '$(buildConfiguration)'
       maximumCpuCount: true
