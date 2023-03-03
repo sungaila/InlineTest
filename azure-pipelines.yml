@@ -101,7 +101,7 @@ jobs:
     condition: eq(variables['agent.os'], 'Windows_NT')
     inputs:
       testSelector: 'testAssemblies'
-      testAssemblyVer2: '$(Pipeline.Workspace)\**\net462\InlineTest.Tests.dll'
+      testAssemblyVer2: '$(Pipeline.Workspace)\**\net462\Sungaila.InlineTest.Tests.dll'
       searchFolder: '$(System.DefaultWorkingDirectory)'
       runTestsInIsolation: true
       codeCoverageEnabled: true
@@ -113,7 +113,7 @@ jobs:
     condition: eq(variables['agent.os'], 'Windows_NT')
     inputs:
       testSelector: 'testAssemblies'
-      testAssemblyVer2: '$(Pipeline.Workspace)\**\net481\InlineTest.Tests.dll'
+      testAssemblyVer2: '$(Pipeline.Workspace)\**\net481\Sungaila.InlineTest.Tests.dll'
       searchFolder: '$(System.DefaultWorkingDirectory)'
       runTestsInIsolation: true
       codeCoverageEnabled: true
@@ -125,12 +125,12 @@ jobs:
     condition: succeededOrFailed()
     inputs:
       command: 'test'
-      arguments: '$(Pipeline.Workspace)\**\net6.0\InlineTest.Tests.dll'
+      arguments: '$(Pipeline.Workspace)\**\net6.0\Sungaila.InlineTest.Tests.dll'
       testRunTitle: '.NET 6.0 ($(agent.os))'
   - task: DotNetCoreCLI@2
     displayName: '.NET 7.0'
     condition: succeededOrFailed()
     inputs:
       command: 'test'
-      arguments: '$(Pipeline.Workspace)\**\net7.0\InlineTest.Tests.dll'
+      arguments: '$(Pipeline.Workspace)\**\net7.0\Sungaila.InlineTest.Tests.dll'
       testRunTitle: '.NET 7.0 ($(agent.os))'
