@@ -57,7 +57,7 @@ jobs:
         run: |
           $LatestGitTag = git describe --tags
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"sungaila_InlineTest" /o:"sungaila" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /v:"$LatestGitTag" /d:sonar.cs.vstest.reportsPaths="**/*.trx" /d:sonar.cs.vscoveragexml.reportsPaths="**/*.coveragexml"
-          dotnet build src\InlineTest.sln -c Debug -p:VersionSuffix=ci
+          dotnet build InlineTest.sln -c Debug -p:VersionSuffix=ci
           dotnet test src\InlineTest.Tests\InlineTest.Tests.csproj --logger trx --collect "Code Coverage"
           dotnet-coverageconverter --CoverageFilesFolder "src\InlineTest.Tests\TestResults"
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
