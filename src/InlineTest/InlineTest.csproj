@@ -22,9 +22,9 @@
     <PackageIcon>Icon_128.png</PackageIcon>
     <PackageProjectUrl>https://github.com/sungaila/InlineTest</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/sungaila/InlineTest/master/etc/Icon_128.png</PackageIconUrl>
-    <Description>TODO ‐ easily referenced as a Roslyn analyzer.</Description>
+    <Description>A C# source generator for quick creation of simple unit tests.</Description>
     <PackageReleaseNotes>Initial release</PackageReleaseNotes>
-    <PackageTags>Roslyn CodeAnalysis</PackageTags>
+    <PackageTags>Roslyn CodeAnalysis CSharp C# Analyzers DotNetAnalyzers SourceGenerator ISourceGenerator UnitTest MSTest testing TestClass TestMethod DataRow</PackageTags>
     <RepositoryUrl>https://github.com/sungaila/InlineTest.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <IncludeSymbols>true</IncludeSymbols>
