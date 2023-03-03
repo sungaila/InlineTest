@@ -9,15 +9,15 @@
 
 
 A [C# source generator](https://devblogs.microsoft.com/dotnet/introducing-c-source-generators/) for quick creation of simple unit tests. Just add these attributes to your method:
-* `AreEqualAttribute`
-* `AreNotEqualAttribute`
-* `IsTrueAttribute`
-* `IsFalseAttribute`
-* `IsNullAttribute`
-* `IsNotNullAttribute`
-* `IsInstanceOfType`
-* `IsNotInstanceOfType`
-* `ThrowsException`
+* `[AreEqual]`
+* `[AreNotEqual]`
+* `[IsTrue]`
+* `[IsFalse]`
+* `[IsNull]`
+* `[IsNotNull]`
+* `[IsInstanceOfType<T>]`
+* `[IsNotInstanceOfType<T>]`
+* `[ThrowsException<T>]`
 
 ```csharp
 [AreEqual(6, 3, Expected = 2)]
