@@ -23,12 +23,6 @@ jobs:
     inputs:
       packageType: 'sdk'
       version: '7.x'
-  - task: DotNetCoreCLI@2
-    displayName: 'Install .NET workload Android'
-    inputs:
-      command: 'custom'
-      custom: 'workload'
-      arguments: 'install android'
   - task: JavaToolInstaller@0
     displayName: 'Install Java SDK 11'
     inputs:
