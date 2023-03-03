@@ -46,7 +46,7 @@ jobs:
   - task: PublishPipelineArtifact@1
     displayName: 'Publish test assemblies'
     inputs:
-      targetPath: '$(Build.SourcesDirectory)\src\Tests\bin\$(buildConfiguration)'
+      targetPath: '$(Build.SourcesDirectory)\src\InlineTest.Tests\bin\$(buildConfiguration)'
       artifact: 'Tests'
       publishLocation: 'pipeline'
   - task: VSBuild@1
