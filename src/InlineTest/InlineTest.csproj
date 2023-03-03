@@ -1,0 +1,79 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Assembly -->
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>Sungaila.InlineTest</AssemblyName>
+    <RootNamespace>Sungaila.InlineTest</RootNamespace>
+    <EmbedAllSources>true</EmbedAllSources>
+    <AssemblyOriginatorKeyFile>InlineTest.snk</AssemblyOriginatorKeyFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+    <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
+    <Configurations>Debug;Release;ReleaseSigned</Configurations>
+  </PropertyGroup>
+
+  <!-- NuGet -->
+  <PropertyGroup>
+    <VersionPrefix>0.9.0</VersionPrefix>
+    <VersionSuffix>preview</VersionSuffix>
+    <Authors>David Sungaila</Authors>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon>Icon_128.png</PackageIcon>
+    <PackageProjectUrl>https://github.com/sungaila/InlineTest</PackageProjectUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/sungaila/InlineTest/master/etc/Icon_128.png</PackageIconUrl>
+    <Description>TODO ‐ easily referenced as a Roslyn analyzer.</Description>
+    <PackageReleaseNotes>Initial release</PackageReleaseNotes>
+    <PackageTags>Roslyn CodeAnalysis</PackageTags>
+    <RepositoryUrl>https://github.com/sungaila/InlineTest.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <DevelopmentDependency>false</DevelopmentDependency>
+    <IncludeBuildOutput>true</IncludeBuildOutput>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <!-- C# compiler -->
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <Features>strict</Features>
+    <WarningsAsErrors>nullable</WarningsAsErrors>
+  </PropertyGroup>
+
+  <!-- Debug builds -->
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+    <VersionSuffix>debug</VersionSuffix>
+  </PropertyGroup>
+
+  <!-- Release builds -->
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <SignAssembly>true</SignAssembly>
+    <Optimize>true</Optimize>
+    <Deterministic>true</Deterministic>
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+  </PropertyGroup>
+
+  <!-- NuGet Icon -->
+  <ItemGroup>
+    <None Include="..\..\etc\Icon_128.png" Pack="True" PackagePath="" Visible="False" />
+    <None Include="..\..\README.md" Pack="True" PackagePath="" Visible="False" />
+    <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="True" PackagePath="analyzers/dotnet/cs" Visible="False" />
+  </ItemGroup>
+
+  <!-- SourceLink build steps -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.4" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.5.0" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.5.0" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" PrivateAssets="analyzers" />
+    <PackageReference Include="MSTest.TestAdapter" Version="3.0.2" PrivateAssets="analyzers" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.0.2" PrivateAssets="analyzers" />
+  </ItemGroup>
+
+  <Import Project="InlineTest.PropertiesSigning.targets" />
+  <Import Project="InlineTest.CodeSigning.targets" />
+  <Import Project="InlineTest.PackageSigning.targets" />
+</Project>

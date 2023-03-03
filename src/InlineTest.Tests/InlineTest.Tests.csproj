@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Assembly -->
+  <PropertyGroup>
+    <TargetFrameworks>net462;net481;net6.0;net7.0</TargetFrameworks>
+    <AssemblyName>Sungaila.InlineTest.Tests</AssemblyName>
+    <RootNamespace>Sungaila.InlineTest.Tests</RootNamespace>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <!-- C# compiler -->
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <Features>strict</Features>
+    <WarningsAsErrors>nullable</WarningsAsErrors>
+  </PropertyGroup>
+
+  <!-- Project references -->
+  <ItemGroup>
+    <ProjectReference Include="..\InlineTest\InlineTest.csproj" OutputItemType="Analyzer"/>
+  </ItemGroup>
+</Project>
