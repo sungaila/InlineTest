@@ -1,4 +1,4 @@
-# ![InlineTest Logo](https://raw.githubusercontent.com/sungaila/InlineTest/master/etc/Icon_64.png) InlineTest
+# <img src="https://raw.githubusercontent.com/sungaila/InlineTest/master/etc/Icon.svg" width="64" height="64" alt="InlineTest Logo"> InlineTest
 
 [![Azure DevOps builds (branch)](https://img.shields.io/azure-devops/build/sungaila/b346bdfc-2251-46e5-82b0-fa1153cea3eb/6/master?style=flat-square)](https://dev.azure.com/sungaila/InlineTest/_build/latest?definitionId=6&branchName=master)
 [![Azure DevOps tests (branch)](https://img.shields.io/azure-devops/tests/sungaila/InlineTest/6/master?style=flat-square)](https://dev.azure.com/sungaila/InlineTest/_build/latest?definitionId=6&branchName=master)
