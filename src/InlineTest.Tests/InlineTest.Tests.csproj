@@ -13,10 +13,11 @@
     <Nullable>enable</Nullable>
     <Features>strict</Features>
     <WarningsAsErrors>nullable</WarningsAsErrors>
+    <NoWarn>CA1822,CA2208,IDE0060</NoWarn>
   </PropertyGroup>
 
   <!-- Project references -->
   <ItemGroup>
-    <ProjectReference Include="..\InlineTest\InlineTest.csproj" OutputItemType="Analyzer"/>
+    <ProjectReference Include="..\InlineTest\InlineTest.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="True"/>
   </ItemGroup>
 </Project>

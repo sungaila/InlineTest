@@ -4,8 +4,6 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata;
-using System.Threading.Tasks;
 
 namespace Sungaila.InlineTest
 {
@@ -18,6 +16,24 @@ namespace Sungaila.InlineTest
                 typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces,
                 memberOptions: SymbolDisplayMemberOptions.IncludeContainingType,
                 genericsOptions: SymbolDisplayGenericsOptions.IncludeTypeParameters));
+        }
+
+        public static string GetFullyQualifiedMetadataNameWithoutGlobal(this ISymbol namedTypeSymbol)
+        {
+            return namedTypeSymbol.ToDisplayString(new SymbolDisplayFormat(
+                globalNamespaceStyle: SymbolDisplayGlobalNamespaceStyle.Omitted,
+                typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces,
+                memberOptions: SymbolDisplayMemberOptions.IncludeContainingType,
+                genericsOptions: SymbolDisplayGenericsOptions.IncludeTypeParameters));
+        }
+
+        public static string GetFullyQualifiedMetadataNameWithoutTypeParameters(this ISymbol namedTypeSymbol)
+        {
+            return namedTypeSymbol.ToDisplayString(new SymbolDisplayFormat(
+                globalNamespaceStyle: SymbolDisplayGlobalNamespaceStyle.Omitted,
+                typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces,
+                memberOptions: SymbolDisplayMemberOptions.IncludeContainingType,
+                genericsOptions: SymbolDisplayGenericsOptions.None));
         }
 
         public static Microsoft.CodeAnalysis.TypeInfo GetTypeInfo(this SyntaxNode source, GeneratorExecutionContext context)
@@ -53,10 +69,16 @@ namespace Sungaila.InlineTest
                 return $"{(isAsyncMethod ? "await " : string.Empty)}{methodDef.GetDeclaredSymbol(context).GetFullyQualifiedMetadataName()}({paramWithoutTypeList}){(withSemicolon ? ";" : string.Empty)}";
             }
 
-            if (methodDef.FirstAncestorOrSelf<ClassDeclarationSyntax>() is not ClassDeclarationSyntax classDef)
+            TypeDeclarationSyntax? classOrStructDef;
+
+            if (methodDef.FirstAncestorOrSelf<ClassDeclarationSyntax>() is ClassDeclarationSyntax classDef)
+                classOrStructDef = classDef;
+            else if (methodDef.FirstAncestorOrSelf<StructDeclarationSyntax>() is StructDeclarationSyntax structDef)
+                classOrStructDef = structDef;
+            else
                 throw new InvalidOperationException();
 
-            return $"{(isAsyncMethod ? "await " : string.Empty)}new {classDef.GetDeclaredSymbol(context).GetFullyQualifiedMetadataName()}().{methodDef.Identifier.ValueText}({paramWithoutTypeList}){(withSemicolon ? ";" : string.Empty)}";
+            return $"{(isAsyncMethod ? "await " : string.Empty)}new {classOrStructDef.GetDeclaredSymbol(context).GetFullyQualifiedMetadataName()}().{methodDef.Identifier.ValueText}({paramWithoutTypeList}){(withSemicolon ? ";" : string.Empty)}";
         }
 
         public static string InvokeMethodWithResult(this MethodDeclarationSyntax methodDef, GeneratorExecutionContext context)

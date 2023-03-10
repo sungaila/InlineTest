@@ -38,7 +38,7 @@ The source generator will produce classes containing the matching unit tests.
 
 ```csharp
 // shortened code for readability
-[GeneratedCode("Sungaila.InlineTest", "0.9.0-preview+17ac90a4b0b471c88edc5fcedee4124a7cbbac28")]
+[GeneratedCode("Sungaila.InlineTest", "1.0.0+17ac90a4b0b471c88edc5fcedee4124a7cbbac28")]
 [TestClass]
 public partial class ReadmeExampleTests
 {
@@ -71,7 +71,8 @@ public partial class ReadmeExampleTests
 ## Restrictions
 1. The same Attribute rules apply here. Your parameters have to be either
     - a constant value
-    - a `System.Type`
+    - a `System.Type` (defined at compile-time)
     - a single-dimensional array of the above
-2. The annotated method must be `static` or the declaring class must have a parameterless constructor.
-3. The annotated method must not have more than 16 parameters.
+2. The method must not have more than 15 parameters.
+3. The method must be defined inside a `class` or `struct`.
+4. For classes without a parameterless constructor the method must be `static`.

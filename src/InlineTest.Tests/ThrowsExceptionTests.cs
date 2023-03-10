@@ -18,7 +18,7 @@ namespace Sungaila.InlineTest.Tests
         }
 
         [ThrowsException<ArgumentException>("Null")]
-        [ThrowsException<InvalidOperationException>]
+        [ThrowsException<InvalidOperationException>("Something")]
         public object? Throw(string input)
         {
             if (input == "Null")
@@ -28,7 +28,7 @@ namespace Sungaila.InlineTest.Tests
         }
 
         [ThrowsException<ArgumentException>("Null")]
-        [ThrowsException<InvalidOperationException>]
+        [ThrowsException<InvalidOperationException>("Something")]
         public object? Throw2(string input)
         {
             if (input == "Null")

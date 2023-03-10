@@ -3,14 +3,13 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 
 namespace Sungaila.InlineTest
 {
-    [Generator]
+    [Generator(LanguageNames.CSharp)]
     internal class InlineTestGenerator : ISourceGenerator
     {
         /// <inheritdoc/>
@@ -43,6 +42,12 @@ namespace Sungaila.InlineTest
                 .Distinct()
                 .ToList();
 
+            var structDefs = attributeDefs
+                .Select(a => a.FirstAncestorOrSelf<StructDeclarationSyntax>())
+                .OfType<StructDeclarationSyntax>()
+                .Distinct()
+                .ToList();
+
             var methodDefs = attributeDefs
                 .Select(a => a.FirstAncestorOrSelf<MethodDeclarationSyntax>())
                 .OfType<MethodDeclarationSyntax>()
@@ -58,25 +63,25 @@ namespace Sungaila.InlineTest
             sb.AppendLine($"namespace Sungaila.InlineTest.Generated");
             sb.Append("{");
 
-            foreach (var classDef in classDefs)
+            foreach (var classOrStructDef in classDefs.Cast<TypeDeclarationSyntax>().Union(structDefs))
             {
-                if (classDef.FirstAncestorOrSelf<NamespaceDeclarationSyntax>() is not NamespaceDeclarationSyntax namespaceDef)
+                if (classOrStructDef.FirstAncestorOrSelf<NamespaceDeclarationSyntax>() is not NamespaceDeclarationSyntax namespaceDef)
                     continue;
 
-                var classTypeInfo = classDef.GetDeclaredSymbol(context);
+                var classOrStructTypeInfo = classOrStructDef.GetDeclaredSymbol(context);
 
                 sb.AppendLine();
                 sb.AppendLine("\t/// <summary>");
-                sb.AppendLine($"\t/// Test class for <seealso cref=\"{classTypeInfo.GetFullyQualifiedMetadataName()}\"/>.");
+                sb.AppendLine($"\t/// Test class for <seealso cref=\"{classOrStructTypeInfo.GetFullyQualifiedMetadataName()}\"/>.");
                 sb.AppendLine("\t/// </summary>");
                 sb.AppendLine($"\t[GeneratedCode(\"{typeof(InlineTestGenerator).Assembly.GetName().Name}\", \"{typeof(InlineTestGenerator).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ?? typeof(InlineTestGenerator).Assembly.GetName().Version.ToString()}\")]");
                 sb.AppendLine("\t[TestClass]");
-                sb.AppendLine($"\tpublic partial class {classDef.Identifier.ValueText}Tests");
+                sb.AppendLine($"\tpublic partial class {classOrStructDef.GetDeclaredSymbol(context).GetFullyQualifiedMetadataNameWithoutGlobal().Replace(".", "_")}");
                 sb.Append("\t{");
 
-                foreach (var methodDef in methodDefs.Where(m => m.FirstAncestorOrSelf<ClassDeclarationSyntax>((c) => c == classDef) != null))
+                foreach (var methodDef in methodDefs.Where(m => m.FirstAncestorOrSelf<ClassDeclarationSyntax>() == classOrStructDef || m.FirstAncestorOrSelf<StructDeclarationSyntax>() == classOrStructDef))
                 {
-                    var allAttributes = attributeDefs.Where(a => a.FirstAncestorOrSelf<MethodDeclarationSyntax>((c) => c == methodDef) != null).ToList();
+                    var allAttributes = attributeDefs.Where(a => a.FirstAncestorOrSelf<MethodDeclarationSyntax>() == methodDef).ToList();
                     var areEqualAttributes = allAttributes.Where(a => a.ConversionExists(context, areEqualSymbol)).ToList();
                     var areNotEqualAttributes = allAttributes.Where(a => a.ConversionExists(context, areNotEqualSymbol)).ToList();
                     var isTrueAttributes = allAttributes.Where(a => a.ConversionExists(context, isTrueSymbol)).ToList();

@@ -23,7 +23,7 @@ namespace Sungaila.InlineTest.Tests
         public void CheckForGeneratedTests()
         {
             // find the generated test class
-            var type = typeof(ReadmeExample).Assembly.GetType("Sungaila.InlineTest.Generated.ReadmeExampleTests", true) ?? throw new NullReferenceException();
+            var type = typeof(ReadmeExample).Assembly.GetType("Sungaila.InlineTest.Generated.Sungaila_InlineTest_Tests_ReadmeExample", true) ?? throw new NullReferenceException();
 
             // there must be a TestClassAttribute
             Assert.IsNotNull(type.GetCustomAttribute<TestClassAttribute>());
