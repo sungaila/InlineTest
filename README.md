@@ -19,6 +19,7 @@ A [C# source generator](https://devblogs.microsoft.com/dotnet/introducing-c-sour
 * `[IsNotInstanceOfType<T>]`
 * `[ThrowsException<T>]`
 
+## Example
 ```csharp
 [AreEqual(6, 3, Expected = 2)]
 [AreEqual(1, 1, Expected = 1)]
@@ -36,13 +37,14 @@ public static int Divide(int dividend, int divisor)
 The source generator will produce classes containing the matching unit tests.
 
 ```csharp
-[GeneratedCode("Sungaila.InlineTest", "0.9.0-debug+17ac90a4b0b471c88edc5fcedee4124a7cbbac28")]
+// shortened code for readability
+[GeneratedCode("Sungaila.InlineTest", "0.9.0-preview+17ac90a4b0b471c88edc5fcedee4124a7cbbac28")]
 [TestClass]
 public partial class ReadmeExampleTests
 {
 	[TestMethod]
-	[DataRow(6, 3, 2, DisplayName = "Divide(dividend: 6, divisor: 3) is 2")]
-	[DataRow(1, 1, 1, DisplayName = "Divide(dividend: 1, divisor: 1) is 1")]
+	[DataRow(6, 3, 2)]
+	[DataRow(1, 1, 1)]
 	public void DivideAreEqual(int dividend, int divisor, int expected)
 	{
 		var result = ReadmeExample.Divide(dividend, divisor);
@@ -50,7 +52,7 @@ public partial class ReadmeExampleTests
 	}
 
 	[TestMethod]
-	[DataRow(10, 1, 42, DisplayName = "Divide(dividend: 10, divisor: 1) is not 42")]
+	[DataRow(10, 1, 42)]
 	public void DivideAreNotEqual(int dividend, int divisor, int notExpected)
 	{
 		var result = ReadmeExample.Divide(dividend, divisor);
@@ -58,7 +60,7 @@ public partial class ReadmeExampleTests
 	}
 
 	[TestMethod]
-	[DataRow(1, 0, DisplayName = "Divide(dividend: 1, divisor: 0) throws ArgumentOutOfRangeException")]
+	[DataRow(1, 0)]
 	public void DivideThrowsException_System_ArgumentOutOfRangeException(int dividend, int divisor)
 	{
 		Assert.ThrowsException<ArgumentOutOfRangeException>(() => ReadmeExample.Divide(dividend, divisor));
