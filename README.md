@@ -70,10 +70,15 @@ public partial class ReadmeExampleTests
 ```
 
 ## Restrictions
-1. The same Attribute rules apply here. Your parameters have to be either
+1. The method must be defined inside a `class` or `struct`.
+    - These must be `public` or `internal`
+    - For classes without a parameterless constructor the method must be static
+2. The method must follow the rules of a test method (MSTest).
+    - must be `public`
+    - cannot be `async void`
+    - cannot use generics
+3. The method must not have more than 15 parameters.
+4. The same [Attribute](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/language-specification/attributes) rules apply here. Your parameters have to be either
     - a constant value
     - a `System.Type` (defined at compile-time)
     - a single-dimensional array of the above
-2. The method must not have more than 15 parameters.
-3. The method must be defined inside a `class` or `struct`.
-4. For classes without a parameterless constructor the method must be `static`.
